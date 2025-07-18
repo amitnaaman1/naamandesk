@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 // import './App.css';
+import FilesPage from './features/files';
 
 // Placeholder page components
 const Dashboard = () => <div className="p-6">Dashboard Page</div>;
 const Clients = () => <div className="p-6">Clients Page</div>;
-const Files = () => <div className="p-6">Files Page</div>;
 const Policies = () => <div className="p-6">Policies Page</div>;
 const Claims = () => <div className="p-6">Claims Page</div>;
 const Agents = () => <div className="p-6">Agents Page</div>;
@@ -44,7 +44,7 @@ function App() {
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/clients" element={<Clients />} />
-              <Route path="/files" element={<Files />} />
+              <Route path="/files" element={<FilesPage />} />
               <Route path="/policies" element={<Policies />} />
               <Route path="/claims" element={<Claims />} />
               <Route path="/agents" element={<Agents />} />
