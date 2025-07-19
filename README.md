@@ -7,8 +7,8 @@ Insurance Agency Management System
 - File upload and management
 - Client and policy management
 - Multi-language support (English/Hebrew)
-- Responsive design
-- RTL support for Hebrew
+- Responsive design with RTL support
+- RTL support for Hebrew with proper drawer positioning
 
 ## Deployment
 
