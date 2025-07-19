@@ -175,20 +175,18 @@ function App() {
                 display: { xs: 'flex', md: 'none' },
                 zIndex: (theme) => theme.zIndex.drawer + 1,
                 bgcolor: 'white',
+                direction: language === 'he' ? 'rtl' : 'ltr',
               }}
             >
-              <Toolbar sx={{ justifyContent: 'space-between' }}>
+              <Toolbar sx={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <IconButton
                     aria-label="open drawer"
-                    edge="start"
+                    edge={language === 'he' ? 'end' : 'start'}
                     onClick={handleDrawerToggle}
                     sx={{ 
-                      mr: 1,
-                      ...(language === 'he' && {
-                        mr: 0,
-                        ml: 2,
-                      }),
+                      ml: language === 'he' ? 1 : 0,
+                      mr: language === 'he' ? 0 : 1,
                       padding: 0,
                     }}
                   >
@@ -196,7 +194,21 @@ function App() {
                   </IconButton>
                   <NaamanLogo size="small-medium" />
                 </Box>
-                <Avatar sx={{ width: 32, height: 32 }} />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <InputBase
+                    placeholder={t('search')}
+                    sx={{
+                      border: 1,
+                      borderColor: 'grey.300',
+                      borderRadius: 1,
+                      px: 1,
+                      py: 0.5,
+                      fontSize: '0.875rem',
+                      width: 120,
+                    }}
+                  />
+                  <Avatar sx={{ width: 32, height: 32 }} />
+                </Box>
               </Toolbar>
             </AppBar>
 
@@ -206,22 +218,16 @@ function App() {
               sx={{
                 width: 256,
                 bgcolor: 'white',
-                borderRight: language === 'he' ? 0 : 1,
                 borderLeft: language === 'he' ? 1 : 0,
+                borderRight: language === 'he' ? 0 : 1,
                 borderColor: 'grey.300',
                 display: { xs: 'none', md: 'flex' },
                 flexDirection: 'column',
                 position: 'fixed',
                 height: '100vh',
                 zIndex: 1,
-                ...(language === 'he' && {
-                  right: 0,
-                  left: 'auto',
-                }),
-                ...(language !== 'he' && {
-                  left: 0,
-                  right: 'auto',
-                }),
+                left: language === 'he' ? 'auto' : 0,
+                right: language === 'he' ? 0 : 'auto',
               }}
             >
               {drawer}
@@ -235,20 +241,15 @@ function App() {
               ModalProps={{
                 keepMounted: true, // Better open performance on mobile.
               }}
+              anchor={language === 'he' ? 'right' : 'left'}
               sx={{
                 display: { xs: 'block', md: 'none' },
                 '& .MuiDrawer-paper': { 
                   boxSizing: 'border-box', 
                   width: 280,
                   bgcolor: 'white',
-                  ...(language === 'he' && {
-                    right: 0,
-                    left: 'auto',
-                  }),
-                  ...(language !== 'he' && {
-                    left: 0,
-                    right: 'auto',
-                  }),
+                  left: language === 'he' ? 'auto' : 0,
+                  right: language === 'he' ? 0 : 'auto',
                 },
               }}
             >
@@ -270,10 +271,12 @@ function App() {
                 flex: 1, 
                 display: 'flex', 
                 flexDirection: 'column',
-                marginInlineStart: { xs: 0, md: language === 'he' ? 0 : '256px' },
-                marginInlineEnd: { xs: 0, md: language === 'he' ? '256px' : 0 },
+                marginLeft: { xs: 0, md: language === 'he' ? 0 : '256px' },
+                marginRight: { xs: 0, md: language === 'he' ? '256px' : 0 },
                 mt: { xs: '64px', md: 0 },
                 minWidth: 0,
+                width: '100%',
+                position: 'relative',
               }}
             >
               {/* Desktop Header */}
@@ -289,6 +292,7 @@ function App() {
                   px: 3,
                   justifyContent: 'space-between',
                   width: '100%',
+                  flexDirection: 'row',
                 }}
               >
                 <Typography
@@ -296,7 +300,7 @@ function App() {
                   sx={{
                     fontWeight: 600,
                     fontSize: '1.25rem',
-                    textAlign: 'start',
+                    textAlign: language === 'he' ? 'right' : 'start',
                     flex: 1,
                   }}
                 >
@@ -306,7 +310,7 @@ function App() {
                   display: 'flex', 
                   alignItems: 'center', 
                   gap: 2,
-                  flexDirection: language === 'he' ? 'row-reverse' : 'row'
+                  flexDirection: 'row'
                 }}>
                   <InputBase
                     placeholder={t('search')}
@@ -318,7 +322,6 @@ function App() {
                       py: 0.5,
                       fontSize: '1rem',
                       width: 200,
-                      marginInlineEnd: 2,
                     }}
                   />
                   <Avatar sx={{ width: 32, height: 32 }} />
