@@ -151,7 +151,7 @@ function App() {
               >
                 <MenuIcon />
               </IconButton>
-                <NaamanLogo size="small" />
+                <NaamanLogo size="small-medium" />
             </Box>
             <Avatar sx={{ width: 32, height: 32 }} />
           </Toolbar>

@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import React from 'react';
 
 interface NaamanLogoProps {
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'small-medium' | 'medium' | 'large';
   showText?: boolean;
   onClick?: () => void;
   style?: React.CSSProperties;
@@ -27,6 +27,14 @@ const NaamanLogo: React.FC<NaamanLogoProps> = ({
       textSize: 16,
       subtextSize: 10,
       spacing: 8
+    },
+    'small-medium': {
+      nSize: 36,
+      lineWidth: 24,
+      lineHeight: 4,
+      textSize: 24,
+      subtextSize: 16,
+      spacing: 12
     },
     medium: {
       nSize: 48,
@@ -118,7 +126,6 @@ const NaamanLogo: React.FC<NaamanLogoProps> = ({
     fontSize: config.subtextSize,
     color: '#6B7280',
     fontWeight: 500,
-    marginTop: 4,
     fontFamily: 'Arial, sans-serif',
     margin: '4px 0 0 0'
   };
