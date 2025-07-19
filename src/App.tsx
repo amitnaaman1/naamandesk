@@ -6,6 +6,7 @@ import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import FilesPage from './features/files';
 import NaamanLogo from './components/NaamanLogo';
 import Settings from './features/settings/Settings';
+import Login from './features/auth/Login';
 import en from './i18n/en';
 import he from './i18n/he';
 
@@ -93,6 +94,9 @@ function App() {
   const [language, setLanguage] = useState<Language>('en');
   const t = (key: keyof typeof en) => translations[language][key] || key;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('naaman_isAuthenticated') === 'true';
+  });
 
   // RTL support
   useEffect(() => {
@@ -102,6 +106,21 @@ function App() {
   const theme = createTheme({
     direction: language === 'he' ? 'rtl' : 'ltr',
   });
+
+  const handleLogin = (username: string, password: string) => {
+    // Simple authentication - you can replace this with real authentication
+    if (username === 'admin' && password === 'password') {
+      setIsAuthenticated(true);
+      localStorage.setItem('naaman_isAuthenticated', 'true');
+    } else {
+      alert('Invalid credentials. Use admin/password');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('naaman_isAuthenticated');
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -163,6 +182,16 @@ function App() {
     </Box>
   );
 
+  // If not authenticated, show only the login page
+  if (!isAuthenticated) {
+    return (
+      <ThemeProvider theme={theme}>
+        <Login onLogin={handleLogin} />
+      </ThemeProvider>
+    );
+  }
+
+  // Main app layout (only shown when authenticated)
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
       <ThemeProvider theme={theme}>
@@ -208,6 +237,13 @@ function App() {
                     }}
                   />
                   <Avatar sx={{ width: 32, height: 32 }} />
+                  <IconButton
+                    onClick={handleLogout}
+                    sx={{ color: '#6B7280' }}
+                    size="small"
+                  >
+                    <Typography variant="caption">Logout</Typography>
+                  </IconButton>
                 </Box>
               </Toolbar>
             </AppBar>
@@ -325,6 +361,16 @@ function App() {
                     }}
                   />
                   <Avatar sx={{ width: 32, height: 32 }} />
+                  <IconButton
+                    onClick={handleLogout}
+                    sx={{ 
+                      color: '#6B7280',
+                      '&:hover': { color: '#EF4444' }
+                    }}
+                    size="small"
+                  >
+                    <Typography variant="caption">Logout</Typography>
+                  </IconButton>
                 </Box>
               </Box>
               
