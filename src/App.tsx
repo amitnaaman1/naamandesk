@@ -1,177 +1,216 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
-import { Box, Typography, InputBase, Avatar } from '@mui/material';
+import { Box, Typography, InputBase, Avatar, IconButton, Drawer, AppBar, Toolbar } from '@mui/material';
+import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 // import './App.css';
 import FilesPage from './features/files';
+import NaamanLogo from './components/NaamanLogo';
 
 // Styled components for navigation
 const StyledLink = styled(Link)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  padding: '8px 16px',
-  borderRadius: '4px',
+  padding: '12px 16px',
+  borderRadius: '8px',
   textDecoration: 'none',
   color: 'inherit',
-  fontSize: '14px',
+  fontSize: '16px',
+  fontWeight: 500,
+  transition: 'all 0.2s',
   '&:hover': {
     backgroundColor: '#f5f5f5',
+    transform: 'translateX(4px)',
   },
   [theme.breakpoints.down('md')]: {
-    padding: '8px',
-    fontSize: '12px',
+    padding: '16px 20px',
+    fontSize: '18px',
+    borderBottom: '1px solid #f0f0f0',
+    borderRadius: 0,
+    '&:hover': {
+      backgroundColor: '#f8f9fa',
+      transform: 'none',
+    },
   },
 }));
 
 // Placeholder page components
 const Dashboard = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h6">Dashboard Page</Typography>
+    <Typography variant="h4">Dashboard Page</Typography>
   </Box>
 );
 const Clients = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h6">Clients Page</Typography>
+    <Typography variant="h4">Clients Page</Typography>
   </Box>
 );
 const Policies = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h6">Policies Page</Typography>
+    <Typography variant="h4">Policies Page</Typography>
   </Box>
 );
 const Claims = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h6">Claims Page</Typography>
+    <Typography variant="h4">Claims Page</Typography>
   </Box>
 );
 const Agents = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h6">Agents Page</Typography>
+    <Typography variant="h4">Agents Page</Typography>
   </Box>
 );
 const Settings = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h6">Settings Page</Typography>
+    <Typography variant="h4">Settings Page</Typography>
   </Box>
 );
 
 function App() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const handleNavClick = () => {
+    setMobileOpen(false);
+  };
+
+  const navigationItems = [
+    { path: '/dashboard', label: 'Dashboard', icon: '📊' },
+    { path: '/clients', label: 'Clients', icon: '👥' },
+    { path: '/files', label: 'Files', icon: '📁' },
+    { path: '/policies', label: 'Policies', icon: '📋' },
+    { path: '/claims', label: 'Claims', icon: '⚠️' },
+    { path: '/agents', label: 'Agents', icon: '👤' },
+    { path: '/settings', label: 'Settings', icon: '⚙️' },
+  ];
+
+  const drawer = (
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Box
+        sx={{
+          height: 64,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderBottom: 1,
+          borderColor: 'grey.300',
+          bgcolor: 'white',
+          color: 'white',
+        }}
+      >
+        <Box sx={{ width: 200 }}>
+          <NaamanLogo size="medium" />
+        </Box>
+      </Box>
+      <Box
+        component="nav"
+        sx={{
+          flex: 1,
+          p: { xs: 1, md: 2 },
+          display: 'flex',
+          flexDirection: 'column',
+          gap: { xs: 0, md: 1 },
+        }}
+      >
+        {navigationItems.map((item) => (
+          <StyledLink key={item.path} to={item.path} onClick={handleNavClick}>
+            <Box component="span" sx={{ display: { xs: 'block', md: 'none' }, mr: 2, fontSize: '20px' }}>
+              {item.icon}
+            </Box>
+            <Box component="span" sx={{ display: { xs: 'block', md: 'block' } }}>
+              {item.label}
+            </Box>
+          </StyledLink>
+        ))}
+      </Box>
+    </Box>
+  );
+
   return (
     <Router>
       <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'grey.50' }}>
-        {/* Sidebar */}
+        {/* Mobile App Bar */}
+        <AppBar
+          position="fixed"
+          sx={{
+            display: { xs: 'flex', md: 'none' },
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+            bgcolor: 'white',
+          }}
+        >
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <IconButton
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton>
+                <NaamanLogo size="small" />
+            </Box>
+            <Avatar sx={{ width: 32, height: 32 }} />
+          </Toolbar>
+        </AppBar>
+
+        {/* Desktop Sidebar */}
         <Box
           component="aside"
           sx={{
-            width: { xs: 64, md: 256 },
+            width: 256,
             bgcolor: 'white',
             borderRight: 1,
             borderColor: 'grey.300',
-            display: 'flex',
+            display: { xs: 'none', md: 'flex' },
             flexDirection: 'column',
-            transition: 'width 0.3s',
+            position: 'fixed',
+            height: '100vh',
+            zIndex: 1,
           }}
         >
-          <Box
-            sx={{
-              height: 64,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottom: 1,
-              borderColor: 'grey.300',
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 'bold',
-                display: { xs: 'none', md: 'block' },
-              }}
-            >
-              NaamanDesk
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 'bold',
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              ND
-            </Typography>
-          </Box>
-          <Box
-            component="nav"
-            sx={{
-              flex: 1,
-              p: { xs: 1, md: 2 },
-              display: 'flex',
-              flexDirection: 'column',
-              gap: { xs: 0.5, md: 1 },
-            }}
-          >
-            <StyledLink to="/dashboard">
-              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
-                📊
-              </Box>
-              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
-                Dashboard
-              </Box>
-            </StyledLink>
-            <StyledLink to="/clients">
-              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
-                👥
-              </Box>
-              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
-                Clients
-              </Box>
-            </StyledLink>
-            <StyledLink to="/files">
-              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
-                📁
-              </Box>
-              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
-                Files
-              </Box>
-            </StyledLink>
-            <StyledLink to="/policies">
-              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
-                📋
-              </Box>
-              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
-                Policies
-              </Box>
-            </StyledLink>
-            <StyledLink to="/claims">
-              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
-                ⚠️
-              </Box>
-              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
-                Claims
-              </Box>
-            </StyledLink>
-            <StyledLink to="/agents">
-              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
-                👤
-              </Box>
-              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
-                Agents
-              </Box>
-            </StyledLink>
-            <StyledLink to="/settings">
-              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
-                ⚙️
-              </Box>
-              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
-                Settings
-              </Box>
-            </StyledLink>
-          </Box>
+          {drawer}
         </Box>
+
+        {/* Mobile Drawer */}
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+            '& .MuiDrawer-paper': { 
+              boxSizing: 'border-box', 
+              width: 280,
+              bgcolor: 'white',
+            },
+          }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
+            <IconButton onClick={handleDrawerToggle}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          {drawer}
+        </Drawer>
+
         {/* Main content */}
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          {/* Header */}
+        <Box 
+          sx={{ 
+            flex: 1, 
+            display: 'flex', 
+            flexDirection: 'column',
+            ml: { xs: 0, md: '256px' },
+            mt: { xs: '64px', md: 0 },
+          }}
+        >
+          {/* Desktop Header */}
           <Box
             component="header"
             sx={{
@@ -179,9 +218,9 @@ function App() {
               bgcolor: 'white',
               borderBottom: 1,
               borderColor: 'grey.300',
-              display: 'flex',
+              display: { xs: 'none', md: 'flex' },
               alignItems: 'center',
-              px: { xs: 2, md: 3 },
+              px: 3,
               justifyContent: 'space-between',
             }}
           >
@@ -189,12 +228,12 @@ function App() {
               variant="h6"
               sx={{
                 fontWeight: 600,
-                fontSize: { xs: '1rem', md: '1.25rem' },
+                fontSize: '1.25rem',
               }}
             >
               Welcome to NaamanDesk
             </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, md: 2 } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <InputBase
                 placeholder="Search..."
                 sx={{
@@ -203,13 +242,14 @@ function App() {
                   borderRadius: 1,
                   px: 1,
                   py: 0.5,
-                  fontSize: { xs: '0.875rem', md: '1rem' },
-                  width: { xs: 96, md: 'auto' },
+                  fontSize: '1rem',
+                  width: 200,
                 }}
               />
-              <Avatar sx={{ width: { xs: 24, md: 32 }, height: { xs: 24, md: 32 } }} />
+              <Avatar sx={{ width: 32, height: 32 }} />
             </Box>
           </Box>
+          
           {/* Page content */}
           <Box component="main" sx={{ flex: 1, overflowY: 'auto' }}>
             <Routes>
