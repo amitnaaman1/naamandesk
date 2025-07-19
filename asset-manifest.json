@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/naamandesk/static/css/main.50bfa39e.css",
-    "main.js": "/naamandesk/static/js/main.b92b7c4d.js",
+    "main.js": "/naamandesk/static/js/main.1c5c46c7.js",
     "static/js/453.d090510d.chunk.js": "/naamandesk/static/js/453.d090510d.chunk.js",
     "index.html": "/naamandesk/index.html",
     "main.50bfa39e.css.map": "/naamandesk/static/css/main.50bfa39e.css.map",
-    "main.b92b7c4d.js.map": "/naamandesk/static/js/main.b92b7c4d.js.map",
+    "main.1c5c46c7.js.map": "/naamandesk/static/js/main.1c5c46c7.js.map",
     "453.d090510d.chunk.js.map": "/naamandesk/static/js/453.d090510d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.50bfa39e.css",
-    "static/js/main.b92b7c4d.js"
+    "static/js/main.1c5c46c7.js"
   ]
 }
