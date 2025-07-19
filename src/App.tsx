@@ -26,32 +26,32 @@ const StyledLink = styled(Link)(({ theme }) => ({
 // Placeholder page components
 const Dashboard = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h4">Dashboard Page</Typography>
+    <Typography variant="h6">Dashboard Page</Typography>
   </Box>
 );
 const Clients = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h4">Clients Page</Typography>
+    <Typography variant="h6">Clients Page</Typography>
   </Box>
 );
 const Policies = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h4">Policies Page</Typography>
+    <Typography variant="h6">Policies Page</Typography>
   </Box>
 );
 const Claims = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h4">Claims Page</Typography>
+    <Typography variant="h6">Claims Page</Typography>
   </Box>
 );
 const Agents = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h4">Agents Page</Typography>
+    <Typography variant="h6">Agents Page</Typography>
   </Box>
 );
 const Settings = () => (
   <Box sx={{ p: { xs: 2, md: 3 } }}>
-    <Typography variant="h4">Settings Page</Typography>
+    <Typography variant="h6">Settings Page</Typography>
   </Box>
 );
 
@@ -92,7 +92,7 @@ function App() {
               NaamanDesk
             </Typography>
             <Typography
-              variant="h4"
+              variant="h6"
               sx={{
                 fontWeight: 'bold',
                 display: { xs: 'block', md: 'none' },

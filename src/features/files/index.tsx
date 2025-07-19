@@ -82,15 +82,7 @@ const FilesPage: React.FC = () => {
       <FileUpload onFilesSelect={handleFilesSelect} />
       {uploadedFiles.length > 0 && (
         <Box sx={{ mt: 3 }}>
-          <Typography 
-            variant="h5" 
-            sx={{ 
-              mb: 2,
-              fontWeight: '600'
-            }}
-          >
-            Uploaded Files
-          </Typography>
+          
           <Box
             sx={{
               display: 'grid',
