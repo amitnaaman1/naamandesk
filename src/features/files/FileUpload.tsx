@@ -27,11 +27,11 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFilesSelect }) => {
       onDrop={handleDrop}
       onDragOver={e => e.preventDefault()}
     >
-      <p className="mb-2 text-gray-600">Drag and drop CSV or XLSX files here, or click to select</p>
+      <p className="mb-2 text-gray-600">Drag and drop CSV, XLSX, or PDF files here, or click to select</p>
       <input
         ref={inputRef}
         type="file"
-        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        accept=".csv, .pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/pdf"
         className="hidden"
         multiple
         onChange={handleFileChange}

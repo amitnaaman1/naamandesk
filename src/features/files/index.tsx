@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { 
   Box, 
   Typography, 
-  Button, 
   Modal, 
   Table, 
   TableBody, 
@@ -21,6 +20,7 @@ const FilesPage: React.FC = () => {
   const [previewFile, setPreviewFile] = useState<File | null>(null);
   const [previewData, setPreviewData] = useState<any[][] | null>(null);
   const [previewError, setPreviewError] = useState<string | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   const handleFilesSelect = (files: File[]) => {
     setUploadedFiles(prev => {
@@ -38,6 +38,10 @@ const FilesPage: React.FC = () => {
       setPreviewFile(null);
       setPreviewData(null);
       setPreviewError(null);
+      if (pdfUrl) {
+        URL.revokeObjectURL(pdfUrl);
+        setPdfUrl(null);
+      }
     }
   };
 
@@ -45,26 +49,46 @@ const FilesPage: React.FC = () => {
     setPreviewFile(file);
     setPreviewError(null);
     setPreviewData(null);
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = new Uint8Array(e.target?.result as ArrayBuffer);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as any[][];
-        setPreviewData(rows.slice(0, 20));
-      } catch (err: any) {
-        setPreviewError(err.message || 'Failed to parse file');
-      }
-    };
-    reader.onerror = () => setPreviewError('Failed to read file');
-    reader.readAsArrayBuffer(file);
+    
+    // Clean up previous PDF URL
+    if (pdfUrl) {
+      URL.revokeObjectURL(pdfUrl);
+      setPdfUrl(null);
+    }
+
+    const fileExtension = file.name.toLowerCase().split('.').pop();
+    
+    if (fileExtension === 'pdf') {
+      // Handle PDF preview with iframe
+      const url = URL.createObjectURL(file);
+      setPdfUrl(url);
+    } else {
+      // Handle Excel/CSV preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = new Uint8Array(e.target?.result as ArrayBuffer);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheet = workbook.Sheets[workbook.SheetNames[0]];
+          const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 }) as any[][];
+          setPreviewData(rows.slice(0, 20));
+        } catch (err: any) {
+          setPreviewError(err.message || 'Failed to parse file');
+        }
+      };
+      reader.onerror = () => setPreviewError('Failed to read file');
+      reader.readAsArrayBuffer(file);
+    }
   };
 
   const closeModal = () => {
     setPreviewFile(null);
     setPreviewData(null);
     setPreviewError(null);
+    if (pdfUrl) {
+      URL.revokeObjectURL(pdfUrl);
+      setPdfUrl(null);
+    }
   };
 
   return (
@@ -149,7 +173,17 @@ const FilesPage: React.FC = () => {
                 {previewError}
               </Typography>
             )}
-            {previewData ? (
+            {pdfUrl ? (
+              <Box sx={{ width: '100%', height: '70vh' }}>
+                <iframe
+                  src={pdfUrl}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 'none' }}
+                  title={`PDF Preview: ${previewFile?.name}`}
+                />
+              </Box>
+            ) : previewData ? (
               <Box sx={{ overflow: 'auto' }}>
                 <Table size="small">
                   <TableBody>

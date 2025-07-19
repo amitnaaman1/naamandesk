@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, IconButton, Card, CardContent } from '@mui/material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
+import { faFileExcel, faFilePdf, faFileCsv } from '@fortawesome/free-solid-svg-icons';
 
 interface FileCardProps {
   file: File;
@@ -10,11 +10,28 @@ interface FileCardProps {
   onPreview: (file: File) => void;
 }
 
-const getFileIcon = () => {
-  // Use FontAwesome Excel file icon
-  return (
-    <FontAwesomeIcon icon={faFileExcel} className="text-green-600 text-2xl md:text-3xl mr-2" title="Excel" />
-  );
+const getFileIcon = (fileName: string) => {
+  const extension = fileName.toLowerCase().split('.').pop();
+  
+  switch (extension) {
+    case 'pdf':
+      return (
+        <FontAwesomeIcon icon={faFilePdf} className="text-red-600 text-2xl md:text-3xl mr-2" title="PDF" />
+      );
+    case 'csv':
+      return (
+        <FontAwesomeIcon icon={faFileCsv} className="text-green-600 text-2xl md:text-3xl mr-2" title="CSV" />
+      );
+    case 'xlsx':
+    case 'xls':
+      return (
+        <FontAwesomeIcon icon={faFileExcel} className="text-green-600 text-2xl md:text-3xl mr-2" title="Excel" />
+      );
+    default:
+      return (
+        <FontAwesomeIcon icon={faFileExcel} className="text-green-600 text-2xl md:text-3xl mr-2" title="File" />
+      );
+  }
 };
 
 const formatSize = (size: number) => {
@@ -47,7 +64,7 @@ const FileCard: React.FC<FileCardProps> = ({ file, onDelete, onPreview }) => {
     >
       <CardContent sx={{ p: { xs: 1.5, md: 2 }, textAlign: 'center' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5, justifyContent: 'center' }}>
-          {getFileIcon()}
+          {getFileIcon(file.name)}
           <Typography
             variant="body1"
             sx={{
