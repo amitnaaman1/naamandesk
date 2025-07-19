@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { Box, Typography, InputBase, Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // import './App.css';
