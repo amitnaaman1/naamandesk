@@ -1,46 +1,217 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Box, Typography, InputBase, Avatar } from '@mui/material';
+import { styled } from '@mui/material/styles';
 // import './App.css';
 import FilesPage from './features/files';
 
+// Styled components for navigation
+const StyledLink = styled(Link)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '8px 16px',
+  borderRadius: '4px',
+  textDecoration: 'none',
+  color: 'inherit',
+  fontSize: '14px',
+  '&:hover': {
+    backgroundColor: '#f5f5f5',
+  },
+  [theme.breakpoints.down('md')]: {
+    padding: '8px',
+    fontSize: '12px',
+  },
+}));
+
 // Placeholder page components
-const Dashboard = () => <div className="p-6">Dashboard Page</div>;
-const Clients = () => <div className="p-6">Clients Page</div>;
-const Policies = () => <div className="p-6">Policies Page</div>;
-const Claims = () => <div className="p-6">Claims Page</div>;
-const Agents = () => <div className="p-6">Agents Page</div>;
-const Settings = () => <div className="p-6">Settings Page</div>;
+const Dashboard = () => (
+  <Box sx={{ p: { xs: 2, md: 3 } }}>
+    <Typography variant="h4">Dashboard Page</Typography>
+  </Box>
+);
+const Clients = () => (
+  <Box sx={{ p: { xs: 2, md: 3 } }}>
+    <Typography variant="h4">Clients Page</Typography>
+  </Box>
+);
+const Policies = () => (
+  <Box sx={{ p: { xs: 2, md: 3 } }}>
+    <Typography variant="h4">Policies Page</Typography>
+  </Box>
+);
+const Claims = () => (
+  <Box sx={{ p: { xs: 2, md: 3 } }}>
+    <Typography variant="h4">Claims Page</Typography>
+  </Box>
+);
+const Agents = () => (
+  <Box sx={{ p: { xs: 2, md: 3 } }}>
+    <Typography variant="h4">Agents Page</Typography>
+  </Box>
+);
+const Settings = () => (
+  <Box sx={{ p: { xs: 2, md: 3 } }}>
+    <Typography variant="h4">Settings Page</Typography>
+  </Box>
+);
 
 function App() {
   return (
     <Router>
-      <div className="flex min-h-screen bg-gray-50">
+      <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'grey.50' }}>
         {/* Sidebar */}
-        <aside className="w-64 bg-white border-r flex flex-col">
-          <div className="h-16 flex items-center justify-center font-bold text-xl border-b">NaamanDesk</div>
-          <nav className="flex-1 p-4 space-y-2">
-            <Link className="block px-4 py-2 rounded hover:bg-gray-100" to="/dashboard">Dashboard</Link>
-            <Link className="block px-4 py-2 rounded hover:bg-gray-100" to="/clients">Clients</Link>
-            <Link className="block px-4 py-2 rounded hover:bg-gray-100" to="/files">Files</Link>
-            <Link className="block px-4 py-2 rounded hover:bg-gray-100" to="/policies">Policies</Link>
-            <Link className="block px-4 py-2 rounded hover:bg-gray-100" to="/claims">Claims</Link>
-            <Link className="block px-4 py-2 rounded hover:bg-gray-100" to="/agents">Agents</Link>
-            <Link className="block px-4 py-2 rounded hover:bg-gray-100" to="/settings">Settings</Link>
-          </nav>
-        </aside>
+        <Box
+          component="aside"
+          sx={{
+            width: { xs: 64, md: 256 },
+            bgcolor: 'white',
+            borderRight: 1,
+            borderColor: 'grey.300',
+            display: 'flex',
+            flexDirection: 'column',
+            transition: 'width 0.3s',
+          }}
+        >
+          <Box
+            sx={{
+              height: 64,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderBottom: 1,
+              borderColor: 'grey.300',
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 'bold',
+                display: { xs: 'none', md: 'block' },
+              }}
+            >
+              NaamanDesk
+            </Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 'bold',
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              ND
+            </Typography>
+          </Box>
+          <Box
+            component="nav"
+            sx={{
+              flex: 1,
+              p: { xs: 1, md: 2 },
+              display: 'flex',
+              flexDirection: 'column',
+              gap: { xs: 0.5, md: 1 },
+            }}
+          >
+            <StyledLink to="/dashboard">
+              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
+                📊
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
+                Dashboard
+              </Box>
+            </StyledLink>
+            <StyledLink to="/clients">
+              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
+                👥
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
+                Clients
+              </Box>
+            </StyledLink>
+            <StyledLink to="/files">
+              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
+                📁
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
+                Files
+              </Box>
+            </StyledLink>
+            <StyledLink to="/policies">
+              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
+                📋
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
+                Policies
+              </Box>
+            </StyledLink>
+            <StyledLink to="/claims">
+              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
+                ⚠️
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
+                Claims
+              </Box>
+            </StyledLink>
+            <StyledLink to="/agents">
+              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
+                👤
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
+                Agents
+              </Box>
+            </StyledLink>
+            <StyledLink to="/settings">
+              <Box component="span" sx={{ display: { xs: 'block', md: 'none' } }}>
+                ⚙️
+              </Box>
+              <Box component="span" sx={{ display: { xs: 'none', md: 'block' } }}>
+                Settings
+              </Box>
+            </StyledLink>
+          </Box>
+        </Box>
         {/* Main content */}
-        <div className="flex-1 flex flex-col">
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           {/* Header */}
-          <header className="h-16 bg-white border-b flex items-center px-6 justify-between">
-            <div className="font-semibold text-lg">Welcome to NaamanDesk</div>
-            <div className="flex items-center space-x-4">
-              {/* Placeholder for search, notifications, user profile */}
-              <input className="border rounded px-2 py-1" placeholder="Search..." />
-              <div className="w-8 h-8 bg-gray-200 rounded-full" />
-            </div>
-          </header>
+          <Box
+            component="header"
+            sx={{
+              height: 64,
+              bgcolor: 'white',
+              borderBottom: 1,
+              borderColor: 'grey.300',
+              display: 'flex',
+              alignItems: 'center',
+              px: { xs: 2, md: 3 },
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 600,
+                fontSize: { xs: '1rem', md: '1.25rem' },
+              }}
+            >
+              Welcome to NaamanDesk
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, md: 2 } }}>
+              <InputBase
+                placeholder="Search..."
+                sx={{
+                  border: 1,
+                  borderColor: 'grey.300',
+                  borderRadius: 1,
+                  px: 1,
+                  py: 0.5,
+                  fontSize: { xs: '0.875rem', md: '1rem' },
+                  width: { xs: 96, md: 'auto' },
+                }}
+              />
+              <Avatar sx={{ width: { xs: 24, md: 32 }, height: { xs: 24, md: 32 } }} />
+            </Box>
+          </Box>
           {/* Page content */}
-          <main className="flex-1 overflow-y-auto">
+          <Box component="main" sx={{ flex: 1, overflowY: 'auto' }}>
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/clients" element={<Clients />} />
@@ -51,9 +222,9 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
             </Routes>
-          </main>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
     </Router>
   );
 }

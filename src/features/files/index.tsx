@@ -1,4 +1,17 @@
 import React, { useState } from 'react';
+import { 
+  Box, 
+  Typography, 
+  Button, 
+  Modal, 
+  Table, 
+  TableBody, 
+  TableRow, 
+  TableCell, 
+  Paper,
+  IconButton
+} from '@mui/material';
+import { Close as CloseIcon } from '@mui/icons-material';
 import FileUpload from './FileUpload';
 import FileCard from '../../components/FileCard';
 import * as XLSX from 'xlsx-republish';
@@ -55,54 +68,121 @@ const FilesPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
-      <h1 className="text-2xl font-bold mb-4">File Upload</h1>
+    <Box sx={{ maxWidth: '7xl', mx: 'auto', mt: { xs: 3, md: 5 }, px: { xs: 2, md: 3 } }}>
+      <Typography 
+        variant="h3" 
+        sx={{ 
+          mb: 2, 
+          fontSize: { xs: '1.5rem', md: '2rem' },
+          fontWeight: 'bold'
+        }}
+      >
+        File Upload
+      </Typography>
       <FileUpload onFilesSelect={handleFilesSelect} />
       {uploadedFiles.length > 0 && (
-        <div className="mt-6">
-          <h2 className="font-semibold mb-2">Uploaded Files</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <Box sx={{ mt: 3 }}>
+          <Typography 
+            variant="h5" 
+            sx={{ 
+              mb: 2,
+              fontWeight: '600'
+            }}
+          >
+            Uploaded Files
+          </Typography>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: '1fr',
+                sm: 'repeat(2, 1fr)',
+                lg: 'repeat(3, 1fr)',
+                xl: 'repeat(4, 1fr)'
+              },
+              gap: 2
+            }}
+          >
             {uploadedFiles.map(file => (
               <FileCard key={file.name + file.size} file={file} onDelete={handleDelete} onPreview={handlePreview} />
             ))}
-          </div>
-        </div>
+          </Box>
+        </Box>
       )}
       {/* Preview Modal */}
-      {previewFile && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg max-w-2xl w-full max-h-[80vh] overflow-auto p-6 relative">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-black text-2xl"
+      <Modal
+        open={!!previewFile}
+        onClose={closeModal}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          p: 2
+        }}
+      >
+        <Paper
+          sx={{
+            width: '100%',
+            maxWidth: '4xl',
+            maxHeight: '90vh',
+            overflow: 'auto',
+            position: 'relative'
+          }}
+        >
+          <Box sx={{ p: { xs: 2, md: 3 }, position: 'relative' }}>
+            <IconButton
               onClick={closeModal}
-              title="Close"
+              sx={{
+                position: 'absolute',
+                top: 8,
+                right: 8,
+                color: 'grey.500',
+                '&:hover': { color: 'black' }
+              }}
             >
-              ×
-            </button>
-            <h3 className="text-lg font-bold mb-4">Preview: {previewFile.name}</h3>
-            {previewError && <div className="text-red-500 mb-2">{previewError}</div>}
+              <CloseIcon />
+            </IconButton>
+            <Typography 
+              variant="h4" 
+              sx={{ 
+                mb: 2, 
+                pr: 4,
+                fontWeight: 'bold'
+              }}
+            >
+              Preview: {previewFile?.name}
+            </Typography>
+            {previewError && (
+              <Typography color="error" sx={{ mb: 2 }}>
+                {previewError}
+              </Typography>
+            )}
             {previewData ? (
-              <div className="overflow-auto">
-                <table className="min-w-full border text-xs">
-                  <tbody>
+              <Box sx={{ overflow: 'auto' }}>
+                <Table size="small">
+                  <TableBody>
                     {previewData.map((row, i) => (
-                      <tr key={i}>
+                      <TableRow key={i}>
                         {row.map((cell, j) => (
-                          <td key={j} className="border px-2 py-1 truncate max-w-[120px]">{String(cell)}</td>
+                          <TableCell key={j} sx={{ maxWidth: 120, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {String(cell)}
+                          </TableCell>
                         ))}
-                      </tr>
+                      </TableRow>
                     ))}
-                  </tbody>
-                </table>
-                <div className="text-gray-400 mt-2">Showing first 20 rows</div>
-              </div>
+                  </TableBody>
+                </Table>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                  Showing first 20 rows
+                </Typography>
+              </Box>
             ) : !previewError ? (
-              <div>Loading preview...</div>
+              <Typography>Loading preview...</Typography>
             ) : null}
-          </div>
-        </div>
-      )}
-    </div>
+          </Box>
+        </Paper>
+      </Modal>
+    </Box>
   );
 };
 

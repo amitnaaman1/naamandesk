@@ -1,4 +1,6 @@
 import React from 'react';
+import { Box, Typography, IconButton, Card, CardContent } from '@mui/material';
+import { Delete as DeleteIcon } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,7 +13,7 @@ interface FileCardProps {
 const getFileIcon = () => {
   // Use FontAwesome Excel file icon
   return (
-    <FontAwesomeIcon icon={faFileExcel} className="text-green-600 text-3xl mr-2" title="Excel" />
+    <FontAwesomeIcon icon={faFileExcel} className="text-green-600 text-2xl md:text-3xl mr-2" title="Excel" />
   );
 };
 
@@ -29,26 +31,64 @@ const FileCard: React.FC<FileCardProps> = ({ file, onDelete, onPreview }) => {
   };
 
   return (
-    <div
-      className="relative group bg-white border rounded-lg shadow-sm p-4 flex flex-col items-center transition hover:shadow-lg cursor-pointer"
+    <Card
+      sx={{
+        position: 'relative',
+        cursor: 'pointer',
+        transition: 'box-shadow 0.3s',
+        '&:hover': {
+          boxShadow: 3
+        }
+      }}
       onClick={handleCardClick}
       tabIndex={0}
       role="button"
       title="Click to preview"
     >
-      <div className="flex items-center mb-2">
-        {getFileIcon()}
-        <span className="font-medium text-sm truncate max-w-[120px]" title={file.name}>{file.name}</span>
-      </div>
-      <div className="text-xs text-gray-500 mb-2">{formatSize(file.size)}</div>
-      <button
-        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-red-500 text-white rounded-full p-1 text-xs transition"
-        onClick={e => { e.stopPropagation(); onDelete(file); }}
-        title="Delete"
-      >
-        ✕
-      </button>
-    </div>
+      <CardContent sx={{ p: { xs: 1.5, md: 2 }, textAlign: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5, justifyContent: 'center' }}>
+          {getFileIcon()}
+          <Typography
+            variant="body1"
+            sx={{
+              fontWeight: 500,
+              fontSize: { xs: '0.875rem', md: '1rem' },
+              maxWidth: { xs: 100, md: 120 },
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
+            }}
+            title={file.name}
+          >
+            {file.name}
+          </Typography>
+        </Box>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+          {formatSize(file.size)}
+        </Typography>
+        <IconButton
+          onClick={(e) => { e.stopPropagation(); onDelete(file); }}
+          sx={{
+            position: 'absolute',
+            top: { xs: 4, md: 8 },
+            right: { xs: 4, md: 8 },
+            opacity: 0,
+            bgcolor: 'error.main',
+            color: 'white',
+            '&:hover': {
+              opacity: 1,
+              bgcolor: 'error.dark'
+            },
+            width: { xs: 24, md: 32 },
+            height: { xs: 24, md: 32 }
+          }}
+          size="small"
+          title="Delete"
+        >
+          <DeleteIcon sx={{ fontSize: { xs: '0.875rem', md: '1rem' } }} />
+        </IconButton>
+      </CardContent>
+    </Card>
   );
 };
 
