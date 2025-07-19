@@ -183,11 +183,18 @@ function App() {
                     aria-label="open drawer"
                     edge="start"
                     onClick={handleDrawerToggle}
-                    sx={{ mr: 2 }}
+                    sx={{ 
+                      mr: 1,
+                      ...(language === 'he' && {
+                        mr: 0,
+                        ml: 2,
+                      }),
+                      padding: 0,
+                    }}
                   >
                     <MenuIcon />
                   </IconButton>
-                    <NaamanLogo size="small-medium" />
+                  <NaamanLogo size="small-medium" />
                 </Box>
                 <Avatar sx={{ width: 32, height: 32 }} />
               </Toolbar>
@@ -199,13 +206,22 @@ function App() {
               sx={{
                 width: 256,
                 bgcolor: 'white',
-                borderRight: 1,
+                borderRight: language === 'he' ? 0 : 1,
+                borderLeft: language === 'he' ? 1 : 0,
                 borderColor: 'grey.300',
                 display: { xs: 'none', md: 'flex' },
                 flexDirection: 'column',
                 position: 'fixed',
                 height: '100vh',
                 zIndex: 1,
+                ...(language === 'he' && {
+                  right: 0,
+                  left: 'auto',
+                }),
+                ...(language !== 'he' && {
+                  left: 0,
+                  right: 'auto',
+                }),
               }}
             >
               {drawer}
@@ -225,10 +241,22 @@ function App() {
                   boxSizing: 'border-box', 
                   width: 280,
                   bgcolor: 'white',
+                  ...(language === 'he' && {
+                    right: 0,
+                    left: 'auto',
+                  }),
+                  ...(language !== 'he' && {
+                    left: 0,
+                    right: 'auto',
+                  }),
                 },
               }}
             >
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
+              <Box sx={{ 
+                display: 'flex', 
+                justifyContent: language === 'he' ? 'flex-start' : 'flex-end', 
+                p: 1 
+              }}>
                 <IconButton onClick={handleDrawerToggle}>
                   <CloseIcon />
                 </IconButton>
@@ -242,7 +270,8 @@ function App() {
                 flex: 1, 
                 display: 'flex', 
                 flexDirection: 'column',
-                marginInlineStart: { xs: 0, md: '256px' },
+                marginInlineStart: { xs: 0, md: language === 'he' ? 0 : '256px' },
+                marginInlineEnd: { xs: 0, md: language === 'he' ? '256px' : 0 },
                 mt: { xs: '64px', md: 0 },
                 minWidth: 0,
               }}
@@ -273,7 +302,12 @@ function App() {
                 >
                   {t('welcome')}
                 </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 2,
+                  flexDirection: language === 'he' ? 'row-reverse' : 'row'
+                }}>
                   <InputBase
                     placeholder={t('search')}
                     sx={{
