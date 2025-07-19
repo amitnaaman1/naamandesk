@@ -125,8 +125,8 @@ function App() {
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box
         sx={{
+          display: { xs: 'none', md: 'flex' },
           height: 64,
-          display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           borderBottom: 1,

@@ -56,49 +56,51 @@ const NaamanLogo: React.FC<NaamanLogoProps> = ({
 
   const config = sizeConfig[size] || sizeConfig.medium;
 
-  // SVG N Logo Component
+  // CSS N Logo Component
   const NLogo = () => (
-    <svg
-      viewBox={`0 0 ${config.lineWidth + 8} ${config.nSize + config.lineHeight + 4}`}
-      style={{
-        width: config.lineWidth + 8,
-        height: config.nSize + config.lineHeight + 4,
-        marginRight: showText ? config.spacing : 0
+    <Box
+      sx={{
+        position: 'relative',
+        display: 'inline-block',
+        marginInlineEnd: showText ? "10px" : 0,
+        minWidth: config.lineWidth,
+        minHeight: config.nSize + config.lineHeight + 8,
       }}
     >
-      <defs>
-        <linearGradient id={`blueGrad-${size}`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#2563EB" stopOpacity="1" />
-          <stop offset="100%" stopColor="#1E3A8A" stopOpacity="1" />
-        </linearGradient>
-        <linearGradient id={`yellowGrad-${size}`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FDE047" stopOpacity="1" />
-          <stop offset="100%" stopColor="#F59E0B" stopOpacity="1" />
-        </linearGradient>
-      </defs>
-      
-      {/* Bold N */}
-      <text 
-        x="0" 
-        y={config.nSize * 0.75} 
-        fontFamily="Arial, sans-serif" 
-        fontSize={config.nSize} 
-        fontWeight="900" 
-        fill={`url(#blueGrad-${size})`}
+      {/* Bold N with gradient */}
+      <Box
+        component="span"
+        sx={{
+          fontSize: config.nSize,
+          fontWeight: 900,
+          fontFamily: 'Arial, Helvetica, sans-serif',
+          background: 'linear-gradient(135deg, #2563EB 0%, #1E3A8A 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          display: 'block',
+          lineHeight: 1,
+          position: 'relative',
+          zIndex: 2,
+        }}
       >
         N
-      </text>
+      </Box>
       
       {/* Yellow underline */}
-      <rect 
-        x="0" 
-        y={config.nSize * 0.75 + 8} 
-        width={config.lineWidth} 
-        height={config.lineHeight} 
-        fill={`url(#yellowGrad-${size})`} 
-        rx={config.lineHeight / 2}
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: "4px",
+          left: 0,
+          width: config.lineWidth,
+          height: config.lineHeight,
+          background: 'linear-gradient(135deg, #FDE047 0%, #F59E0B 100%)',
+          borderRadius: config.lineHeight / 2,
+          zIndex: 1,
+        }}
       />
-    </svg>
+    </Box>
   );
 
   const containerStyles: React.CSSProperties = {
@@ -118,7 +120,7 @@ const NaamanLogo: React.FC<NaamanLogoProps> = ({
     fontWeight: 'bold',
     color: '#1E3A8A',
     lineHeight: 1,
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: 'Arial, Helvetica, sans-serif',
     margin: 0
   };
 
@@ -126,8 +128,7 @@ const NaamanLogo: React.FC<NaamanLogoProps> = ({
     fontSize: config.subtextSize,
     color: '#6B7280',
     fontWeight: 500,
-    fontFamily: 'Arial, sans-serif',
-    margin: '4px 0 0 0'
+    fontFamily: 'Arial, Helvetica, sans-serif',
   };
 
   return (
