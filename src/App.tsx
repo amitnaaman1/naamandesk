@@ -1,6 +1,6 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
-import { Box, Typography, InputBase, Avatar, IconButton, Drawer, AppBar, Toolbar } from '@mui/material';
+import { Box, Typography, Avatar, IconButton, Drawer, AppBar, Toolbar } from '@mui/material';
 import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import FilesPage from './features/files';
