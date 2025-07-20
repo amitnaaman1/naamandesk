@@ -224,18 +224,6 @@ function App() {
                   <NaamanLogo size="small-medium" />
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <InputBase
-                    placeholder={t('search')}
-                    sx={{
-                      border: 1,
-                      borderColor: 'grey.300',
-                      borderRadius: 1,
-                      px: 1,
-                      py: 0.5,
-                      fontSize: '0.875rem',
-                      width: 120,
-                    }}
-                  />
                   <Avatar sx={{ width: 32, height: 32 }} />
                   <IconButton
                     onClick={handleLogout}
@@ -348,18 +336,6 @@ function App() {
                   gap: 2,
                   flexDirection: 'row'
                 }}>
-                  <InputBase
-                    placeholder={t('search')}
-                    sx={{
-                      border: 1,
-                      borderColor: 'grey.300',
-                      borderRadius: 1,
-                      px: 1,
-                      py: 0.5,
-                      fontSize: '1rem',
-                      width: 200,
-                    }}
-                  />
                   <Avatar sx={{ width: 32, height: 32 }} />
                   <IconButton
                     onClick={handleLogout}
